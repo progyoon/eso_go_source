@@ -1,0 +1,17 @@
+elasticsearch:
+  host: "http://192.168.10.14:9200"
+  username: "esadmin"
+  password: "esdjemals!#0"
+  index_name: "pm-5m-lte-lsm"
+  generation: "LTE"
+file_dir:
+  scan_dir:  "/root/GolandProjects/xml-parser/xml" #파일 스캔 디렉토리
+  sqlite_dir: "/root/GolandProjects/xml-parser/ru_mapping_SAMSUNG_LTE.db"  # SQLite DB 파일 경로
+logging:
+  log_prefix: "xml_parser"
+  retention_days: 7
+  log_level: "INFO"  # DEBUG, INFO, WARN, ERROR 중 선택
+  log_dir: "/root/GolandProjects/same-parser"                  # 로그 파일 디렉토리
+  collection_period: 5
+worker:
+  open_file_worker_count: 1000

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="logLevel">INFO</Property>
+        <Property name="logDir">/app/logs</Property>
+        <Property name="vendor">${env:vendor_name}</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <RollingFile name="File" filePattern="${logDir}/application-${vendor}-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DirectWriteRolloverStrategy>
+                <!-- 보존 정책: 7일 초과 삭제 -->
+                <Delete basePath="${logDir}" maxDepth="1">
+                    <!-- 벤더명이 바뀌어도 매칭되도록 와일드카드 -->
+                    <IfFileName glob="application-*.log*"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DirectWriteRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="${logLevel}">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File" />
+        </Root>
+    </Loggers>
+</Configuration>
